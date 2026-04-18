@@ -53,7 +53,8 @@ jobs:
         env:
             SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
-            scanMetadataReportFile: ./src/.sonarqube/out/.sonar/report-task.txt
+            #scanMetadataReportFile: ./src/.sonarqube/out/.sonar/report-task.txt
+            scanMetadataReportFile: .sonarqube/out/.sonar/report-task.txt
 
       - name: Exibir Quality Gates
         if: ${{always()}}
