@@ -8,7 +8,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
         - name: Obterndo Código
-          uses: actions/checkout@v4
+          uses: actions/checkout@v6
             
         - name: Setup dotnet
           uses: actions/setup-dotnet@v4
@@ -32,7 +32,7 @@ jobs:
                     POSTGRES_DB: review-filmes
         steps:
             - name: Obterndo Código
-              uses: actions/checkout@v4
+              uses: actions/checkout@v6
                 
             - name: Setup dotnet
               uses: actions/setup-dotnet@v4
@@ -44,3 +44,34 @@ jobs:
               run: dotnet test ./Review-Filmes.Test.Integration/Review-Filmes.Test.Integration.csproj
               env: 
                 ConnectionStrings__DefaultConnection: "Host=localhost;Port=5432;Database=review-filmes;Username=review;Password=postgrespwd"
+    
+    sonarqube:
+        name: Scan com Sonarqube
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v6
+            - name: Setup JDK              
+              uses: actions/setup-java@v5
+              with:
+                distribution: 'adopt'
+                java-version: '21'
+
+            - name: Setup dotnet
+              uses: actions/setup-dotnet@v4
+              with:
+                dotnet-version: "8.0.300"
+
+            - name: Instalação SonarQube Scan
+              run: dotnet tool install --global dotnet-sonarscanner
+              
+            - name: Build and Analise
+              working-directory: ./src
+              run: |
+                dotnet sonarscanner begin \
+                /o:"danilo-devops" \
+                /k:"danilo-devops_filmes" \
+                /d:sonar.token="${{secrets.SONARQUBE_TOKEN}}"
+
+                dotnet build ./Review-Filmes.sln
+
+                dotnet sonarscanner end /d:sonar.token="${{secrets.SONARQUBE_TOKEN}}"
