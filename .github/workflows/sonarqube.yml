@@ -46,3 +46,15 @@ jobs:
           ${{ runner.temp }}\scanner\dotnet-sonarscanner begin /k:"danilo-devops_filmes" /o:"danilo-devops" /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
           dotnet build ./src/Review-Filmes.sln
           ${{ runner.temp }}\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
+
+      - name: Verificação de Quality Gate
+        uses: sonarsource/sonarqube-quality-gate-action@master
+        id: sonarqube-quality-gate-check
+        env:
+            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+            scanMetadataReportFile: ./src/.sonarqube/out/.sonar/report-task.txt
+
+      - name: Exibir Quality Gates
+        if: ${{always()}}
+        run: echo "Status do Quality Gate: ${{steps.sonarqube-quality-gate-check.outputs.quality-gate-status}}"
