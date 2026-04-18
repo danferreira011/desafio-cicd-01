@@ -13,6 +13,11 @@ jobs:
     steps:
       - name: Obterndo Código
         uses: actions/checkout@v4
+
+      - name: Analise do Dockerfile
+        uses: hadolint/hadolint-action@v3.1.0
+        with:
+          dockerfile: ./src/Review-Filmes.Web/Dockerfile
         
       - name: Setup dotnet
         uses: actions/setup-dotnet@v4
@@ -52,3 +57,17 @@ jobs:
           tags: |
             ${{vars.DOCKERHUB_USER}}/projeto-devops-pro:latest
             ${{vars.DOCKERHUB_USER}}/projeto-devops-pro:v${{github.run_number}}
+      - name: Executar Trivy
+        uses: aquasecurity/trivy-action@0.35.0
+        with:
+          scan-type: 'image'
+          image-ref: ${{vars.DOCKERHUB_USER}}/projeto-devops-pro:v${{github.run_number}}
+          format: sarif
+          output: trivy-docker-result.sarif
+          severity: 'UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL'
+
+      - name: Upload do arquivo trivy para o github
+        uses: github/codeql-action/upload-sarif@v4
+        with:
+          category: docker-result
+          sarif_file: trivy-docker-result.sarif
