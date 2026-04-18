@@ -43,9 +43,9 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: powershell
         run: |
-          ${{ runner.temp }}\scanner\dotnet-sonarscanner begin /k:"danilo-devops_filmes" /o:"danilo-devops" /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
-          dotnet build ./src/Review-Filmes.sln
-          ${{ runner.temp }}\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
+           ${{ runner.temp }}\scanner\dotnet-sonarscanner begin /k:"dan-teste_sonar" /o:"dan-teste" /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
+           dotnet build ./src/Review-Filmes.sln
+           ${{ runner.temp }}\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
 
       - name: Debug Token
         shell: bash
