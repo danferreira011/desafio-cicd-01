@@ -26,17 +26,12 @@ jobs:
 
   testes:
     needs: [build]
-    uses: danferreira011/desafio-cicd-01/.github/workflows/testes.yml@main
-  
-  sonar:
-    needs: [build]
-    uses: danferreira011/desafio-cicd-01/.github/workflows/sonarqube.yml@main
-    secrets: inherit
+    uses: danferreira011/desafio-cicd-01/.github/workflows/testes.yml@main  
 
   release:
     name: Criação de Release
     runs-on: ubuntu-latest
-    needs: [testes,sonar]
+    needs: [testes]
     steps:
       - name: Obterndo Código
         uses: actions/checkout@v4
