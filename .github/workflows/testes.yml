@@ -17,3 +17,30 @@ jobs:
         - name: Execução do Teste de unidade
           working-directory: ./src
           run: dotnet test ./Review-Filmes.Test.Unit/Review-Filmes.Test.Unit.csproj
+
+    integration-test:
+        name: Teste de Integração
+        runs-on: ubuntu-latest
+        services:
+            postgre:
+                image: postgres:alpine3.22
+                ports:
+                    - 5432:5432
+                env: 
+                    POSTGRES_USER: review
+                    POSTGRES_PASSWORD: postgrespwd
+                    POSTGRES_DB: review-filmes
+        steps:
+            - name: Obterndo Código
+              uses: actions/checkout@v4
+                
+            - name: Setup dotnet
+              uses: actions/setup-dotnet@v4
+              with:
+                dotnet-version: "8.0.300"
+
+            - name: Execução do Teste de Integração
+              working-directory: ./src
+              run: dotnet test ./Review-Filmes.Test.Integration/Review-Filmes.Test.Integration.csproj
+              env: 
+                ConnectionsSrtings__DefaultConnection: "Host=localhost;Port=5432;Database=review-filmes;Username=review;Password=postgrespwd"
