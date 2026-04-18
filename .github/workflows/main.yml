@@ -23,3 +23,25 @@ jobs:
         working-directory: ./src
         run: |
           dotnet build ./Review-Filmes.sln
+  release:
+    name: Criaçã de Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Obterndo Código
+        uses: actions/checkout@v6.0.2
+
+      - name: Docker Login
+        uses: docker/login-action@v4
+        with:
+          username: ${{vars.DOCKERHUB_USER}}
+          password:${{secrets.DOCKERHUB_PWD}}
+
+      - name: Build and Push Docker Image
+        uses: docker/build-push-action@v7
+        with:
+          push: true
+          context: ./src
+          file: ./src/Review-Filmes.Web/Dockerfile
+          tags: |
+            ${{vars.DOCKERHUB_USER}}/projeto-devops-pro:latest
+            ${{vars.DOCKERHUB_USER}}/projeto-devops-pro:v${{github.run_number}}
