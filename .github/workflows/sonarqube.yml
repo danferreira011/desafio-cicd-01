@@ -57,4 +57,4 @@ jobs:
 
       - name: Exibir Quality Gates
         if: ${{always()}}
-        run: echo "Status do Quality Gate: ${{steps.sonarqube-quality-gate-check.outputs.quality-gate-status}}"
+        run: 'echo "Status do Quality Gate: ${{steps.sonarqube-quality-gate-check.outputs.quality-gate-status}}"'
