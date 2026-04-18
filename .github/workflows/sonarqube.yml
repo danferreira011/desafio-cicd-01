@@ -47,6 +47,18 @@ jobs:
           dotnet build ./src/Review-Filmes.sln
           ${{ runner.temp }}\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
 
+      - name: Debug Token
+        shell: bash
+        env:
+            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+            if [ -z "$SONAR_TOKEN" ]; then
+                echo "TOKEN VAZIO"
+                exit 1
+            else
+                echo "TOKEN OK"
+            fi
+
       - name: Verificação de Quality Gate
         uses: sonarsource/sonarqube-quality-gate-action@v1
         id: sonarqube-quality-gate-check
