@@ -48,7 +48,7 @@ jobs:
           ${{ runner.temp }}\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
 
       - name: Verificação de Quality Gate
-        uses: sonarsource/sonarqube-quality-gate-action@master
+        uses: sonarsource/sonarqube-quality-gate-action@v1
         id: sonarqube-quality-gate-check
         env:
             SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
