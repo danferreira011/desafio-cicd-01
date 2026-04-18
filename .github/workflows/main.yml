@@ -1,0 +1,25 @@
+name: Pipeline CI/CD
+run-name: Pipeline CI/CD executada por ${{ github.actor}} numero ${{github.run_number}}
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Obterndo Código
+        uses: actions/checkout@v4
+        
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.300"
+
+      - name: Execução do Comando build
+        working-directory: ./src
+        run: |
+          dotnet build ./Review-Filmes.sln
