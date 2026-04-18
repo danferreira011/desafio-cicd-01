@@ -28,6 +28,7 @@ jobs:
     needs: [build]
     #uses: danferreira011/desafio-cicd-01/.github/workflows/testes.yml@main
     uses: danferreira011/desafio-cicd-01/.github/workflows/sonarqube.yml@main
+    secrets: inherit
 
   release:
     name: Criação de Release
