@@ -23,10 +23,15 @@ jobs:
         working-directory: ./src
         run: |
           dotnet build ./Review-Filmes.sln
+
+  testes:
+    needs: [build]
+    uses: danferreira011/desafio-cicd-01/.github/workflows/testes.yml@main
+
   release:
     name: Criação de Release
     runs-on: ubuntu-latest
-    needs: [build]
+    needs: [testes]
     steps:
       - name: Obterndo Código
         uses: actions/checkout@v6.0.2
