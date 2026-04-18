@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Obterndo Código
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
         
       - name: Setup dotnet
         uses: actions/setup-dotnet@v4
@@ -39,7 +39,7 @@ jobs:
     needs: [testes,sonar]
     steps:
       - name: Obterndo Código
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@v4
 
       - name: Docker Login
         uses: docker/login-action@v4
