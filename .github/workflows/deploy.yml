@@ -1,11 +1,6 @@
 name: Deploy no K8S
 on:
     workflow_call: 
-        
-permissions:
-   id-token: write
-   contents: read
-   actions: read
 
 jobs:
     deploy-homolog:
@@ -13,6 +8,14 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v4
+
+            - name: Login to AWS with access keys
+              uses: KoalaOps/login-aws@v1
+              with:
+                aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+                aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+                aws_region: us-east-1
+                enable_ecr_login: true               
 
             - name: Set Context K8S
               uses: azure/k8s-set-context@v5
