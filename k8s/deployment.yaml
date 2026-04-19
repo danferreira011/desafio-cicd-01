@@ -51,12 +51,6 @@ spec:
       labels:
         app: reviewfilmes
     spec:
-      tolerations: #Cluster AWS - Tolerations para permitir que os pods sejam agendados em nós com a taint "dedicated=apps:NoSchedule"
-      - key: "dedicated"
-        operator: "Equal"
-        value: "apps"
-        effect: "NoSchedule"
-
       containers:
         - name: reviewfilmes
           image: danferreira011/projeto-devops-pro
