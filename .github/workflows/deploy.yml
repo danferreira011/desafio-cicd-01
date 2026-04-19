@@ -29,7 +29,7 @@ jobs:
                 manifests: |
                    k8s/deployment.yaml
                 images: |
-                    danferreira011/projeto-devops-pro:v${{github.run_number}}
+                     ${{vars.DOCKERHUB_USER}}/projeto-devops-pro:v${{github.run_number}}
             
         
 
