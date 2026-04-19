@@ -75,3 +75,8 @@ jobs:
         with:
           category: docker-result
           sarif_file: trivy-docker-result.sarif
+
+  deploy-homo:
+    needs: [release]
+    uses: danferreira011/desafio-cicd-01/.github/workflows/deploy.yml@main 
+    secrets: inherit
