@@ -67,7 +67,7 @@ kind: Service
 metadata:
   name: reviewfilmes
   annotations:
-  service.beta.kubernetes.io/aws-load-balancer-scheme: internet-facing # loadbalancer publico
+    service.beta.kubernetes.io/aws-load-balancer-scheme: internet-facing # loadbalancer publico
 spec: 
   selector:
     app: reviewfilmes
