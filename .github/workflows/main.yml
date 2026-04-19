@@ -83,3 +83,14 @@ jobs:
     needs: [release]
     uses: danferreira011/desafio-cicd-01/.github/workflows/deploy.yml@main 
     secrets: inherit
+    with:
+      environment-name: homologacao
+      environment-url: http://homologacao.danferreira.vip
+
+  deploy-producao:
+    needs: [release]
+    uses: danferreira011/desafio-cicd-01/.github/workflows/deploy.yml@main 
+    secrets: inherit
+    with:
+      environment-name: producao
+      environment-url: http://producao.danferreira.vip
