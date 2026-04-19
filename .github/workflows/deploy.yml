@@ -1,11 +1,21 @@
 name: Deploy no K8S
 on:
     workflow_call: 
+        inputs:
+            environment-name:
+                type: string
+                required: true
+            environment-url:
+                type: string
+                required: true
 
 jobs:
     deploy-homolog:
         name: Deploy Homolog
         runs-on: ubuntu-latest
+        environment:
+            name: ${{inputs.environment-name}}
+            url: ${{inputs.environment-url}}
         steps:
             - uses: actions/checkout@v4
 
@@ -23,9 +33,13 @@ jobs:
                 method: kubeconfig
                 kubeconfig: ${{secrets.K8S_CONFIG}}
 
+            - name: Update Deployment
+              run: "sed -i s/host: homologacao.danferreira.vip/host: ${{vars.BASE_URL}}/g' k8s/deployment.yaml"
+
             - name: Deploy no K8S
               uses: Azure/k8s-deploy@v5
               with:
+                namespace: ${{secrets.K8S_NAMESPACES}}
                 manifests: |
                    k8s/deployment.yaml
                 images: |
