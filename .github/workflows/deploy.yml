@@ -1,6 +1,7 @@
 name: Deploy no K8S
 on:
     workflow_call: 
+        
 permissions:
    id-token: write
    contents: read
