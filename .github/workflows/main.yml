@@ -5,10 +5,12 @@ on:
   push:
     branches:
       - main
-      
+
 permissions:
   security-events: write
   contents: read
+  id-token: write  
+  actions: read
 
 jobs:
   build:
