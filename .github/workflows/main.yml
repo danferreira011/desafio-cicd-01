@@ -87,6 +87,22 @@ jobs:
       environment-name: homologacao
       environment-url: http://homologacao.danferreira.vip
 
+  teste-e2e:
+    runs-on: ubuntu-latest
+    needs: [deploy-homo]
+    environment:
+      name: homologacao
+    container:
+      image: danferreira011/webdriver-dotnet:chrome
+      env:
+        BASE_URL: "http://${{vars.BASE_URL}}"
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Execução Teste E2E
+        working-directory: ./src
+        run: dotnet test ./Review-Filmes.Test.EndToEnd/Review-Filmes.Test.EndToEnd.csproj
+
   deploy-producao:
     needs: [deploy-homo]
     uses: danferreira011/desafio-cicd-01/.github/workflows/deploy.yml@main 
